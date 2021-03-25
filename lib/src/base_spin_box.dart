@@ -22,9 +22,8 @@
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinbox_fork/src/number_formatter.dart';
 import 'package:meta/meta.dart';
-
-import 'spin_formatter.dart';
 
 // ignore_for_file: public_member_api_docs
 
@@ -35,13 +34,12 @@ abstract class BaseSpinBox extends StatefulWidget {
   double get max;
   double get step;
   double get value;
-  int get decimals;
+  int get numOfDecimals;
   ValueChanged<double> get onChanged;
 }
 
 abstract class BaseSpinBoxState<T extends BaseSpinBox> extends State<T> {
   double _value;
-  double _cachedValue;
   FocusNode _focusNode;
   TextEditingController _controller;
 
@@ -49,18 +47,28 @@ abstract class BaseSpinBoxState<T extends BaseSpinBox> extends State<T> {
   bool get hasFocus => _focusNode?.hasFocus ?? false;
   FocusNode get focusNode => _focusNode;
   TextEditingController get controller => _controller;
-  SpinFormatter get formatter => SpinFormatter(
-      min: widget.min, max: widget.max, decimals: widget.decimals);
 
-  static double _parseValue(String text) => double.tryParse(text) ?? 0;
-  String _formatText(double value) => value.toStringAsFixed(widget.decimals);
+  static double _parseValue(String text) {
+    if (text.isEmpty) return 0;
+    return double.tryParse(text.replaceAll(',', ''));
+  }
+
+  String _formatText(double number) {
+    return formatCurrencyForeign(
+      number,
+      decimals: widget.numOfDecimals,
+      numOfInteger: widget.max.toInt().toString().length,
+    );
+  }
 
   @override
   void initState() {
     super.initState();
     _value = widget.value;
-    _cachedValue = widget.value;
-    _controller = TextEditingController(text: _formatText(_value));
+    _controller = TextEditingController(
+        text: _value.toInt() == _value
+            ? _value.toInt().toString()
+            : _formatText(_value));
     _controller.addListener(_updateValue);
     _focusNode = FocusNode(onKey: (node, event) => _handleKey(event));
     _focusNode.addListener(() => setState(_selectAll));
@@ -98,7 +106,6 @@ abstract class BaseSpinBoxState<T extends BaseSpinBox> extends State<T> {
   bool setValue(double v) {
     final newValue = v?.clamp(widget.min, widget.max)?.toDouble();
     if (newValue == null || newValue == value) return false;
-    _cachedValue = newValue;
     final text = _formatText(newValue);
     final selection = _controller.selection;
     final oldOffset = value.isNegative ? 1 : 0;
@@ -118,12 +125,7 @@ abstract class BaseSpinBoxState<T extends BaseSpinBox> extends State<T> {
   @protected
   void fixupValue(String value) {
     final v = _parseValue(value);
-    if (value.isEmpty || (v < widget.min || v > widget.max)) {
-      // will trigger notify to _updateValue()
-      _controller.text = _formatText(_cachedValue);
-    } else {
-      _cachedValue = _value;
-    }
+    _controller.text = v.toInt() == v ? v.toInt().toString() : _formatText(v);
   }
 
   void _selectAll() {

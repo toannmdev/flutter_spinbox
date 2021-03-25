@@ -1,14 +1,9 @@
 # SpinBox for Flutter
 
-[![pub](https://img.shields.io/pub/v/flutter_spinbox.svg)](https://pub.dev/packages/flutter_spinbox)
-[![score](https://badges.bar/flutter_spinbox/pub%20points)](https://pub.dev/packages/flutter_spinbox/score)
-![build](https://github.com/jpnurmi/flutter_spinbox/workflows/build/badge.svg)
-[![codecov](https://codecov.io/gh/jpnurmi/flutter_spinbox/branch/master/graph/badge.svg)](https://codecov.io/gh/jpnurmi/flutter_spinbox)
-[![style: lint](https://img.shields.io/badge/style-lint-4BC0F5.svg)](https://pub.dev/packages/lint)
-[![license: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
 SpinBox for [Flutter](https://flutter.dev) is a numeric input widget with an input field for
 entering a specific value, and spin buttons for quick, convenient, and accurate value adjustments.
+
+Package forked by [Flutter Spinbox](https://github.com/jpnurmi/flutter_spinbox) of Jpnurmi
 
 ## Guidelines
 
@@ -30,10 +25,10 @@ Material and Cupertino (iOS).
 
 ### Material Design
 
-![SpinBox](https://raw.githubusercontent.com/jpnurmi/flutter_spinbox/master/doc/images/spinbox.gif "SpinBox")
+![SpinBox](https://github.com/NamSukio/flutter_spinbox/blob/master/doc/images/spinbox.gif "SpinBox")
 
 ```dart
-import 'package:flutter_spinbox/material.dart'; // or flutter_spinbox.dart for both
+import 'package:flutter_spinbox_fork/material.dart'; // or flutter_spinbox_fork.dart for both
 
 SpinBox(
   min: 1,
@@ -47,10 +42,10 @@ See also [Material Components widgets](https://flutter.dev/docs/development/ui/w
 
 ### Cupertino (iOS-style) Design
 
-![CupertinoSpinBox](https://raw.githubusercontent.com/jpnurmi/flutter_spinbox/master/doc/images/cupertino_spinbox.gif "CupertinoSpinBox")
+![CupertinoSpinBox](https://github.com/NamSukio/flutter_spinbox/blob/master/doc/images/cupertino_spinbox.gif "CupertinoSpinBox")
 
 ```dart
-import 'package:flutter_spinbox/cupertino.dart'; // or flutter_spinbox.dart for both
+import 'package:flutter_spinbox_fork/cupertino.dart'; // or flutter_spinbox_fork.dart for both
 
 CupertinoSpinBox(
   min: 1,

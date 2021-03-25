@@ -23,6 +23,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinbox_fork/src/number_formatter.dart';
 
 import '../base_spin_box.dart';
 import 'spin_button.dart';
@@ -57,7 +58,7 @@ class CupertinoSpinBox extends BaseSpinBox {
     this.value = 0,
     this.interval = const Duration(milliseconds: 100),
     this.acceleration,
-    this.decimals = 0,
+    this.numOfDecimals = 0,
     bool enabled,
     this.autofocus = false,
     TextInputType keyboardType,
@@ -87,7 +88,7 @@ class CupertinoSpinBox extends BaseSpinBox {
         keyboardType = keyboardType ??
             TextInputType.numberWithOptions(
               signed: min < 0,
-              decimal: decimals > 0,
+              decimal: numOfDecimals > 0,
             ),
         enabled = (enabled ?? true) && min < max,
         //decoration = decoration ?? const BoxDecoration(),
@@ -126,10 +127,9 @@ class CupertinoSpinBox extends BaseSpinBox {
   final double value;
 
   /// The number of decimal places used for formatting the value.
-  ///
-  /// Defaults to `0`.
+  /// Defaults to `0`
   @override
-  final int decimals;
+  final int numOfDecimals;
 
   /// The interval used for auto-incrementing and -decrementing.
   ///
@@ -255,7 +255,12 @@ class _CupertinoSpinBoxState extends BaseSpinBoxState<CupertinoSpinBox> {
       textInputAction: widget.textInputAction,
       toolbarOptions: widget.toolbarOptions,
       keyboardAppearance: widget.keyboardAppearance,
-      inputFormatters: [formatter],
+      inputFormatters: [
+        NumericTextFormatter(
+          numOfInteger: widget.max.toInt().toString().length,
+          decimals: widget.numOfDecimals,
+        )
+      ],
       prefix: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -287,6 +292,10 @@ class _CupertinoSpinBoxState extends BaseSpinBoxState<CupertinoSpinBox> {
       enabled: widget.enabled,
       focusNode: focusNode,
       onSubmitted: fixupValue,
+      onTap: () {
+        controller.selection = TextSelection.fromPosition(
+            TextPosition(offset: controller.text.length));
+      },
     );
 
     if (isHorizontal) {
