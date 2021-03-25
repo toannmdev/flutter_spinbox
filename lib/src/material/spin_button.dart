@@ -29,18 +29,14 @@ import '../spin_gesture.dart';
 class SpinButton extends StatelessWidget {
   const SpinButton({
     Key key,
-    this.icon,
+    @required this.icon,
     this.color,
     this.enabled = true,
     @required this.step,
     this.acceleration,
     @required this.interval,
     @required this.onStep,
-  })  : assert(enabled != null),
-        assert(step != null),
-        assert(interval != null),
-        assert(onStep != null),
-        super(key: key);
+  }) : super(key: key);
 
   final Icon icon;
   final Color color;
@@ -52,17 +48,22 @@ class SpinButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SpinGesture(
-      enabled: enabled,
-      step: step,
-      interval: interval,
-      acceleration: acceleration,
-      onStep: onStep,
-      child: IconButton(
-        icon: icon,
-        color: color,
-        iconSize: icon.size ?? 24,
-        onPressed: enabled ? () => onStep(step) : null,
+    return Material(
+      shape: const CircleBorder(),
+      color: Colors.transparent,
+      clipBehavior: Clip.antiAlias,
+      child: SpinGesture(
+        enabled: enabled,
+        step: step,
+        interval: interval,
+        acceleration: acceleration,
+        onStep: onStep,
+        child: IconButton(
+          icon: icon,
+          color: color,
+          iconSize: icon.size ?? 24,
+          onPressed: enabled ? () => onStep(step) : null,
+        ),
       ),
     );
   }

@@ -37,11 +37,7 @@ class SpinGesture extends StatefulWidget {
     this.acceleration,
     @required this.interval,
     @required this.onStep,
-  })  : assert(enabled != null),
-        assert(step != null),
-        assert(interval != null),
-        assert(onStep != null),
-        super(key: key);
+  }) : super(key: key);
 
   final bool enabled;
   final Widget child;

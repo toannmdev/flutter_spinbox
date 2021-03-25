@@ -31,18 +31,14 @@ const double kSpinPadding = 16;
 class CupertinoSpinButton extends StatelessWidget {
   const CupertinoSpinButton({
     Key key,
-    this.icon,
+    @required this.icon,
     this.color,
     this.enabled = true,
     @required this.step,
     this.acceleration,
     @required this.interval,
     @required this.onStep,
-  })  : assert(enabled != null),
-        assert(step != null),
-        assert(interval != null),
-        assert(onStep != null),
-        super(key: key);
+  }) : super(key: key);
 
   final Icon icon;
   final Color color;
