@@ -1,3 +1,9 @@
+## [0.4.0] - 2021-03-26
+
+* Stable null-safe version with stable SDK constraints
+* Upgraded depencencies
+* Migrated to null safety
+
 ## [0.3.1+2] - 2020-12-31
 
 * Cleaned up an unused intl package dependency and import.

@@ -28,32 +28,32 @@ import 'package:meta/meta.dart';
 // ignore_for_file: public_member_api_docs
 
 abstract class BaseSpinBox extends StatefulWidget {
-  const BaseSpinBox({Key key}) : super(key: key);
+  const BaseSpinBox({Key? key}) : super(key: key);
 
   double get min;
   double get max;
   double get step;
   double get value;
   int get numOfDecimals;
-  ValueChanged<double> get onChanged;
+  ValueChanged<double?>? get onChanged;
 }
 
 abstract class BaseSpinBoxState<T extends BaseSpinBox> extends State<T> {
-  double _value;
-  FocusNode _focusNode;
-  TextEditingController _controller;
+  double? _value;
+  FocusNode? _focusNode;
+  TextEditingController? _controller;
 
-  double get value => _value;
+  double? get value => _value;
   bool get hasFocus => _focusNode?.hasFocus ?? false;
-  FocusNode get focusNode => _focusNode;
-  TextEditingController get controller => _controller;
+  FocusNode? get focusNode => _focusNode;
+  TextEditingController? get controller => _controller;
 
-  static double _parseValue(String text) {
+  static double? _parseValue(String text) {
     if (text.isEmpty) return 0;
     return double.tryParse(text.replaceAll(',', ''));
   }
 
-  String _formatText(double number) {
+  String _formatText(double? number) {
     return formatCurrencyForeign(
       number,
       decimals: widget.numOfDecimals,
@@ -66,15 +66,15 @@ abstract class BaseSpinBoxState<T extends BaseSpinBox> extends State<T> {
     super.initState();
     _value = widget.value;
     _controller = TextEditingController(
-        text: _value.toInt() == _value
-            ? _value.toInt().toString()
+        text: _value!.toInt() == _value
+            ? _value!.toInt().toString()
             : _formatText(_value));
-    _controller.addListener(_updateValue);
+    _controller!.addListener(_updateValue);
     _focusNode = FocusNode(onKey: (node, event) => _handleKey(event));
-    _focusNode.addListener(() => setState(_selectAll));
-    _focusNode.addListener(() {
+    _focusNode!.addListener(() => setState(_selectAll));
+    _focusNode!.addListener(() {
       if (hasFocus) return;
-      fixupValue(controller.text);
+      fixupValue(controller!.text);
     });
   }
 
@@ -89,29 +89,29 @@ abstract class BaseSpinBoxState<T extends BaseSpinBox> extends State<T> {
 
   bool _handleKey(RawKeyEvent event) {
     if (event.logicalKey == LogicalKeyboardKey.arrowUp) {
-      return event is RawKeyUpEvent || setValue(value + widget.step);
+      return event is RawKeyUpEvent || setValue(value! + widget.step);
     } else if (event.logicalKey == LogicalKeyboardKey.arrowDown) {
-      return event is RawKeyUpEvent || setValue(value - widget.step);
+      return event is RawKeyUpEvent || setValue(value! - widget.step);
     }
     return false;
   }
 
   void _updateValue() {
-    final v = _parseValue(_controller.text);
+    final v = _parseValue(_controller!.text);
     if (v == _value) return;
     setState(() => _value = v);
     widget.onChanged?.call(v);
   }
 
   bool setValue(double v) {
-    final newValue = v?.clamp(widget.min, widget.max)?.toDouble();
-    if (newValue == null || newValue == value) return false;
+    final newValue = v.clamp(widget.min, widget.max).toDouble();
+    if (newValue == value) return false;
     final text = _formatText(newValue);
-    final selection = _controller.selection;
-    final oldOffset = value.isNegative ? 1 : 0;
-    final newOffset = _parseValue(text).isNegative ? 1 : 0;
+    final selection = _controller!.selection;
+    final oldOffset = value!.isNegative ? 1 : 0;
+    final newOffset = _parseValue(text)!.isNegative ? 1 : 0;
     setState(() {
-      _controller.value = _controller.value.copyWith(
+      _controller!.value = _controller!.value.copyWith(
         text: text,
         selection: selection.copyWith(
           baseOffset: selection.baseOffset - oldOffset + newOffset,
@@ -124,13 +124,13 @@ abstract class BaseSpinBoxState<T extends BaseSpinBox> extends State<T> {
 
   @protected
   void fixupValue(String value) {
-    final v = _parseValue(value);
-    _controller.text = v.toInt() == v ? v.toInt().toString() : _formatText(v);
+    final v = _parseValue(value)!;
+    _controller!.text = v.toInt() == v ? v.toInt().toString() : _formatText(v);
   }
 
   void _selectAll() {
-    if (!_focusNode.hasFocus) return;
-    _controller.selection = _controller.selection
-        .copyWith(baseOffset: 0, extentOffset: _controller.text.length);
+    if (!_focusNode!.hasFocus) return;
+    _controller!.selection = _controller!.selection
+        .copyWith(baseOffset: 0, extentOffset: _controller!.text.length);
   }
 }
