@@ -30,19 +30,19 @@ typedef SpinCallback = bool Function(double value);
 
 class SpinGesture extends StatefulWidget {
   const SpinGesture({
-    Key? key,
+    Key key,
     this.enabled = true,
-    required this.child,
-    required this.step,
+    @required this.child,
+    @required this.step,
     this.acceleration,
-    required this.interval,
-    required this.onStep,
+    @required this.interval,
+    @required this.onStep,
   }) : super(key: key);
 
   final bool enabled;
   final Widget child;
   final double step;
-  final double? acceleration;
+  final double acceleration;
   final Duration interval;
   final SpinCallback onStep;
 
@@ -51,8 +51,8 @@ class SpinGesture extends StatefulWidget {
 }
 
 class _SpinGestureState extends State<SpinGesture> {
-  Timer? timer;
-  late double step;
+  Timer timer;
+  double step;
 
   @override
   void initState() {
@@ -78,7 +78,7 @@ class _SpinGestureState extends State<SpinGesture> {
   bool onStep() {
     if (!widget.enabled) return false;
     if (widget.acceleration != null) {
-      step += widget.acceleration!;
+      step += widget.acceleration;
     }
     return widget.onStep(step);
   }

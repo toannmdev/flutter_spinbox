@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinbox_fork/cupertino.dart';
+import 'package:flutter_spinbox_fork_1224/cupertino.dart';
 
 void main() => runApp(
       CupertinoApp(

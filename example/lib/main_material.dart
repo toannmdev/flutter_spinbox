@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinbox_fork/flutter_spinbox.dart';
+import 'package:flutter_spinbox_fork_1224/flutter_spinbox.dart';
 
 void main() => runApp(
       MaterialApp(
@@ -71,7 +71,7 @@ class HorizontalSpinBoxPage extends StatelessWidget {
                 suffixText: 'Suffix',
                 counterText: 'Counter',
               ),
-              validator: (text) => text!.isEmpty ? 'Invalid' : null,
+              validator: (text) => text.isEmpty ? 'Invalid' : null,
             ),
             padding: const EdgeInsets.all(16),
           ),

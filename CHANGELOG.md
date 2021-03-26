@@ -1,8 +1,6 @@
-## [0.4.0] - 2021-03-26
+## [0.3.2] - 2021-03-26
 
-* Stable null-safe version with stable SDK constraints
-* Upgraded depencencies
-* Migrated to null safety
+* Fix bugs
 
 ## [0.3.1+2] - 2020-12-31
 

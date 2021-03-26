@@ -6,10 +6,10 @@ environment:
   sdk: '>=2.7.0 <3.0.0'
 
 dependencies:
-  flutter_spinbox_fork:
+  flutter_spinbox_fork_1224:
     path: ../
   flutter:
     sdk: flutter
-  intl: ^0.17.0
+  intl: ^0.16.1
 flutter:
   uses-material-design: true

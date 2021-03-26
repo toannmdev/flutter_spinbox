@@ -22,7 +22,7 @@
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_spinbox_fork/src/number_formatter.dart';
+import 'package:flutter_spinbox_fork_1224/src/number_formatter.dart';
 import 'package:meta/meta.dart';
 
 // ignore_for_file: public_member_api_docs

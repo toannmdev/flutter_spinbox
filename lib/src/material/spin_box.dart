@@ -25,7 +25,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_spinbox_fork/src/number_formatter.dart';
+import 'package:flutter_spinbox_fork_1224/src/number_formatter.dart';
 
 import '../base_spin_box.dart';
 import 'spin_button.dart';
@@ -51,7 +51,7 @@ import 'spin_button.dart';
 class SpinBox extends BaseSpinBox {
   /// Creates a spinbpx.
   SpinBox({
-    Key? key,
+    Key key,
     this.min = 0,
     this.max = 100,
     this.step = 1,
@@ -59,15 +59,15 @@ class SpinBox extends BaseSpinBox {
     this.interval = const Duration(milliseconds: 100),
     this.acceleration,
     this.numOfDecimals = 0,
-    bool? enabled,
+    bool enabled,
     this.autofocus = false,
-    TextInputType? keyboardType,
+    TextInputType keyboardType,
     this.textInputAction,
-    InputDecoration? decoration,
+    InputDecoration decoration,
     this.validator,
     this.keyboardAppearance,
-    Icon? incrementIcon,
-    Icon? decrementIcon,
+    Icon incrementIcon,
+    Icon decrementIcon,
     this.direction = Axis.horizontal,
     this.textAlign = TextAlign.center,
     this.textDirection = TextDirection.ltr,
@@ -139,7 +139,7 @@ class SpinBox extends BaseSpinBox {
   /// When holding down the increment and decrement buttons, respectively.
   ///
   /// Defaults to `null` (no acceleration).
-  final double? acceleration;
+  final double acceleration;
 
   /// The visual direction of the spinbox layout.
   ///
@@ -169,7 +169,7 @@ class SpinBox extends BaseSpinBox {
 
   /// Called when the user has changed the value.
   @override
-  final ValueChanged<double?>? onChanged;
+  final ValueChanged<double> onChanged;
 
   /// See [TextField.enabled].
   final bool enabled;
@@ -181,22 +181,22 @@ class SpinBox extends BaseSpinBox {
   final TextInputType keyboardType;
 
   /// See [TextField.textInputAction].
-  final TextInputAction? textInputAction;
+  final TextInputAction textInputAction;
 
   /// See [TextField.decoration].
   final InputDecoration decoration;
 
   /// See [FormField.validator].
-  final FormFieldValidator<String>? validator;
+  final FormFieldValidator<String> validator;
 
   /// See [TextField.keyboardAppearance].
-  final Brightness? keyboardAppearance;
+  final Brightness keyboardAppearance;
 
   /// See [TextField.showCursor].
-  final bool? showCursor;
+  final bool showCursor;
 
   /// See [TextField.cursorColor].
-  final Color? cursorColor;
+  final Color cursorColor;
 
   /// See [TextField.enableInteractiveSelection].
   final bool enableInteractiveSelection;
@@ -208,10 +208,10 @@ class SpinBox extends BaseSpinBox {
   final TextDirection textDirection;
 
   /// See [TextField.style].
-  final TextStyle? textStyle;
+  final TextStyle textStyle;
 
   /// See [TextField.toolbarOptions].
-  final ToolbarOptions? toolbarOptions;
+  final ToolbarOptions toolbarOptions;
 
   @override
   _SpinBoxState createState() => _SpinBoxState();
@@ -230,7 +230,7 @@ class _SpinBoxState extends BaseSpinBoxState<SpinBox> {
     return theme.hintColor;
   }
 
-  Color? _iconColor(ThemeData theme, String? errorText) {
+  Color _iconColor(ThemeData theme, String errorText) {
     if (!widget.enabled) return theme.disabledColor;
     if (hasFocus && errorText == null) return _activeColor(theme);
 
@@ -244,7 +244,7 @@ class _SpinBoxState extends BaseSpinBoxState<SpinBox> {
     }
   }
 
-  double _textHeight(String? text, TextStyle style) {
+  double _textHeight(String text, TextStyle style) {
     final painter = TextPainter(
       textAlign: widget.textAlign,
       textDirection: widget.textDirection,
@@ -261,7 +261,7 @@ class _SpinBoxState extends BaseSpinBoxState<SpinBox> {
         widget.decoration.applyDefaults(theme.inputDecorationTheme);
 
     final errorText =
-        decoration.errorText ?? widget.validator?.call(controller!.text);
+        decoration.errorText ?? widget.validator?.call(controller.text);
     final iconColor = _iconColor(theme, errorText);
 
     var bottom = 0.0;
@@ -270,19 +270,19 @@ class _SpinBoxState extends BaseSpinBoxState<SpinBox> {
     if (isHorizontal) {
       final caption = theme.textTheme.caption;
       if (errorText != null) {
-        bottom = _textHeight(errorText, caption!.merge(decoration.errorStyle));
+        bottom = _textHeight(errorText, caption.merge(decoration.errorStyle));
       }
       if (decoration.helperText != null) {
         bottom = max(
             bottom,
             _textHeight(
-                decoration.helperText, caption!.merge(decoration.helperStyle)));
+                decoration.helperText, caption.merge(decoration.helperStyle)));
       }
       if (decoration.counterText != null) {
         bottom = max(
             bottom,
             _textHeight(decoration.counterText,
-                caption!.merge(decoration.counterStyle)));
+                caption.merge(decoration.counterStyle)));
       }
       if (bottom > 0) bottom += 8.0; // subTextGap
     }
@@ -291,20 +291,20 @@ class _SpinBoxState extends BaseSpinBoxState<SpinBox> {
       step: widget.step,
       color: iconColor,
       icon: widget.incrementIcon,
-      enabled: widget.enabled && value! < widget.max,
+      enabled: widget.enabled && value < widget.max,
       interval: widget.interval,
       acceleration: widget.acceleration,
-      onStep: (step) => setValue(value! + step),
+      onStep: (step) => setValue(value + step),
     );
 
     final decrementButton = SpinButton(
       step: widget.step,
       color: iconColor,
       icon: widget.decrementIcon,
-      enabled: widget.enabled && value! > widget.min,
+      enabled: widget.enabled && value > widget.min,
       interval: widget.interval,
       acceleration: widget.acceleration,
-      onStep: (step) => setValue(value! - step),
+      onStep: (step) => setValue(value - step),
     );
 
     final inputDecoration = widget.decoration.copyWith(
@@ -339,8 +339,8 @@ class _SpinBoxState extends BaseSpinBoxState<SpinBox> {
       focusNode: focusNode,
       onSubmitted: fixupValue,
       onTap: () {
-        controller!.selection = TextSelection.fromPosition(
-            TextPosition(offset: controller!.text.length));
+        controller.selection = TextSelection.fromPosition(
+            TextPosition(offset: controller.text.length));
       },
     );
 
