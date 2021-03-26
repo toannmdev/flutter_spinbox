@@ -28,7 +28,7 @@ class NumericTextFormatter extends TextInputFormatter {
   }
 }
 
-double formatNumberCurrency(String text) {
+double? formatNumberCurrency(String text) {
   if (text.isEmpty) return 0;
   return double.tryParse(text.replaceAll(',', ''));
 }
