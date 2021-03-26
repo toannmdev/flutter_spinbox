@@ -12,7 +12,7 @@ class NumericTextFormatter extends TextInputFormatter {
     if (newValue.text.isEmpty) {
       return newValue.copyWith(text: '');
     } else if (newValue.text.compareTo(oldValue.text) != 0) {
-      if (newValue.text.replaceAll(RegExp(r"[0-9.,]"), '').isNotEmpty) {
+      if (newValue.text.replaceAll(RegExp("[0-9.,]"), '').isNotEmpty) {
         return newValue = oldValue;
       }
       final newString = formatCurrencyForeign(newValue.text,

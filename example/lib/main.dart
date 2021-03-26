@@ -64,7 +64,7 @@ class HorizontalSpinBoxPage extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 16),
                   ),
                   CupertinoSpinBox(
-                    min: 0.0, max: 999999999.0, value: 999,numOfDecimals: 3,
+                    min: 0.0, max: 999999999.0, value: 8888.0,numOfDecimals: 3,
                   )
                 ],
               ),
