@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinbox_example/number_formatter.dart';
 import 'package:flutter_spinbox_fork_1224/cupertino.dart';
 
 void main() => runApp(
@@ -50,64 +51,53 @@ class HorizontalSpinBoxPage extends StatelessWidget {
                   CupertinoSpinBox(
                     value: 10,
                     numOfDecimals: 1,
+                    inputWidget: (controller, focusNode) {
+                      return CupertinoTextField(
+                        controller: controller,
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                        textAlign: TextAlign.center,
+                        inputFormatters: [
+                          NumericTextFormatter(
+                            numOfInteger: 3,
+                            decimals: 1,
+                          )
+                        ],
+                        prefix: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              child: Icon(
+                                null,
+                              ),
+                            ),
+                          ],
+                        ),
+                        suffix: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              child: Icon(
+                                null,
+                              ),
+                            ),
+                          ],
+                        ),
+                        padding: EdgeInsets.zero,
+                        focusNode: focusNode,
+                        onTap: () {
+                          controller.selection = TextSelection.fromPosition(
+                              TextPosition(offset: controller.text.length));
+                        },
+                      );
+                    },
                   ),
                 ],
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    child: Text('Decimals', style: caption),
-                    padding: const EdgeInsets.only(left: 16),
-                  ),
-                  CupertinoSpinBox(
-                    min: 0.0, max: 999999999.0, value: 8888.0,numOfDecimals: 3,
-                  )
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    child: Text('Accelerated', style: caption),
-                    padding: const EdgeInsets.only(left: 16),
-                  ),
-                  CupertinoSpinBox(
-                    min: -10.0,
-                    max: 10000.0,
-                    value: 0.25,
-                    numOfDecimals: 3,
-                  ),
-                ],
-              ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  child: Text('Decorated', style: caption),
-                  padding: const EdgeInsets.only(left: 16, top: 16),
-                ),
-                CupertinoSpinBox(
-                  value: 50,
-                  prefix: Text('prefix'),
-                  suffix: Text('suffix'),
-                  decoration: const BoxDecoration(
-                    border: Border.symmetric(
-                      vertical: BorderSide(
-                        width: 0,
-                        color: CupertinoColors.inactiveGray,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
             ),
           ],
         ),
@@ -132,26 +122,36 @@ class VerticalSpinBoxPage extends StatelessWidget {
                   max: 50,
                   value: 15,
                   spacing: 24,
-                  direction: Axis.vertical,
-                  textStyle: TextStyle(fontSize: 48),
-                  incrementIcon: Icon(CupertinoIcons.up_arrow, size: 64),
-                  decrementIcon: Icon(CupertinoIcons.down_arrow, size: 64),
-                  padding: const EdgeInsets.all(24),
-                  decoration: BoxDecoration(
-                    color: CupertinoDynamicColor.withBrightness(
-                      color: CupertinoColors.white,
-                      darkColor: CupertinoColors.black,
-                    ),
-                    border: Border.all(
-                      color: CupertinoDynamicColor.withBrightness(
-                        color: Color(0x33000000),
-                        darkColor: Color(0x33FFFFFF),
+                  inputWidget: (controller, focusNode) {
+                    return CupertinoTextField(
+                      controller: controller,
+                      focusNode: focusNode,
+                      style: TextStyle(fontSize: 48),
+                      padding: const EdgeInsets.all(24),
+                      inputFormatters: [
+                          NumericTextFormatter(
+                            numOfInteger: 2,
+                            decimals: 1,
+                          )
+                        ],
+                      decoration: BoxDecoration(
+                        color: CupertinoDynamicColor.withBrightness(
+                          color: CupertinoColors.white,
+                          darkColor: CupertinoColors.black,
+                        ),
+                        border: Border.all(
+                          color: CupertinoDynamicColor.withBrightness(
+                            color: Color(0x33000000),
+                            darkColor: Color(0x33FFFFFF),
+                          ),
+                          style: BorderStyle.solid,
+                          width: 0.0,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
                       ),
-                      style: BorderStyle.solid,
-                      width: 0.0,
-                    ),
-                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                  ),
+                    );
+                  },
+                  direction: Axis.vertical,
                 ),
               ),
             ),
